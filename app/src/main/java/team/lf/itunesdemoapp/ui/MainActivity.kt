@@ -1,7 +1,8 @@
-package team.lf.itunesdemoapp
+package team.lf.itunesdemoapp.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import team.lf.itunesdemoapp.R
 
 class MainActivity : AppCompatActivity() {
 
