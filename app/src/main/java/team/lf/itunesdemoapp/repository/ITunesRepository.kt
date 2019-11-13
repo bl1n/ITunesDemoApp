@@ -2,7 +2,6 @@ package team.lf.itunesdemoapp.repository
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
-import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import team.lf.itunesdemoapp.database.ITunesDemoDatabase
@@ -14,7 +13,7 @@ import team.lf.itunesdemoapp.network.asDBModel
 
 class ITunesRepository(private val database: ITunesDemoDatabase) {
 
-    val results: LiveData<List<DomainModel>>  =
+    val searchList: LiveData<List<DomainModel>>  =
         Transformations.map(database.iTunesDemoDao.getSearchResults()){
         it.asDomainModel()
     }

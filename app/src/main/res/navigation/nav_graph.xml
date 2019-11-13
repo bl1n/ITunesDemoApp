@@ -5,7 +5,7 @@
 
     <fragment
         android:id="@+id/albumListFragment"
-        android:name="team.lf.itunesdemoapp.ui.albumlist.AlbumListFragment"
+        android:name="team.lf.itunesdemoapp.ui.search.SearchListFragment"
         android:label="AlbumListFragment" >
         <action
             android:id="@+id/action_albumListFragment_to_albumDetailFragment"
@@ -15,6 +15,6 @@
     </fragment>
     <fragment
         android:id="@+id/albumDetailFragment"
-        android:name="team.lf.itunesdemoapp.ui.albumdetail.AlbumDetailFragment"
+        android:name="team.lf.itunesdemoapp.ui.lookup.AlbumDetailFragment"
         android:label="AlbumDetailFragment" />
 </navigation>
