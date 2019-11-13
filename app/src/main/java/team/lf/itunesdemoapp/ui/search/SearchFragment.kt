@@ -9,6 +9,8 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import team.lf.itunesdemoapp.R
 import team.lf.itunesdemoapp.databinding.FragmentSearchBinding
 
@@ -22,6 +24,8 @@ class SearchFragment : Fragment() {
             .get(SeachViewModel::class.java)
     }
 
+    private lateinit var searchAdapter: SearchAdapter
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -34,19 +38,38 @@ class SearchFragment : Fragment() {
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
 
+        searchAdapter = SearchAdapter(DomainModelClickListener {
+            Toast.makeText(this.context, "$it", Toast.LENGTH_SHORT).show()
+        })
+
+        binding.root.findViewById<RecyclerView>(R.id.search_list).apply {
+            layoutManager = LinearLayoutManager(context)
+            adapter = searchAdapter
+        }
+
+
         viewModel.eventNetworkError.observe(this, Observer {
             if(it) onNetworkError()
         })
 
         viewModel.searchList.observe(this, Observer {
             it?.let {
-                binding.results.text = it.size.toString()
+
             }
         })
 
         viewModel.refreshSearchListFromRepository("between")
 
         return  binding.root
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        viewModel.searchList.observe(viewLifecycleOwner, Observer {
+            it?.apply {
+                searchAdapter.submitDomainModelListInCoroutine(it)
+            }
+        })
     }
 
     private fun onNetworkError() {

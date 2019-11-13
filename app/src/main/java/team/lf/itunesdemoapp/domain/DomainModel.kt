@@ -54,6 +54,10 @@ sealed class DomainModel {
         val primaryGenreName: String
     ) : DomainModel()
 
+    object Header: DomainModel() {
+        override val id = Long.MIN_VALUE
+    }
+
     abstract val id: Long
 }
 
