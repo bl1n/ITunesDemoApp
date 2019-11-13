@@ -54,7 +54,7 @@ class SearchFragment : Fragment() {
             if (it) onNetworkError()
         })
         binding.testSearchButton.setOnClickListener {
-            viewModel.refreshSearchListFromRepository("between")
+            viewModel.refreshSearchListFromRepository("jack")
         }
         return binding.root
     }
