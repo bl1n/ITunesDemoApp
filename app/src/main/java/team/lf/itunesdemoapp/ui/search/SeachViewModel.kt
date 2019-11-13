@@ -8,6 +8,7 @@ import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 import team.lf.itunesdemoapp.database.getDatabase
 import team.lf.itunesdemoapp.repository.ITunesRepository
+import timber.log.Timber
 import java.io.IOException
 import java.lang.Exception
 
@@ -28,7 +29,7 @@ class SeachViewModel(application: Application) : AndroidViewModel(application) {
         get() = _isNetworkErrorShown
 
     init {
-        clearDatabase()
+        refreshSearchListFromRepository("")
     }
 
     private fun clearDatabase() {
@@ -42,17 +43,19 @@ class SeachViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     fun refreshSearchListFromRepository(term: String) {
-        viewModelScope.launch {
-            try {
-                repository.clearDatabase()
-                repository.refreshSearchList(term)
-                _eventNetworkError.value = false
-                _isNetworkErrorShown.value = false
+        if (term != "")
+            viewModelScope.launch {
+                try {
+                    Timber.d("refresh")
+                    repository.clearDatabase()
+                    repository.refreshSearchList(term)
+                    _eventNetworkError.value = false
+                    _isNetworkErrorShown.value = false
 
-            } catch (networkError: IOException) {
-                _eventNetworkError.value = true
+                } catch (networkError: IOException) {
+                    _eventNetworkError.value = true
+                }
             }
-        }
     }
 
     fun onNetworkErrorShown() {

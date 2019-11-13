@@ -16,8 +16,8 @@ import team.lf.itunesdemoapp.databinding.FragmentSearchBinding
 
 class SearchFragment : Fragment() {
 
-    private val viewModel:SeachViewModel by lazy {
-        val activity = requireNotNull(this.activity){
+    private val viewModel: SeachViewModel by lazy {
+        val activity = requireNotNull(this.activity) {
             "You can only access the viewModel after onActivityCreated()"
         }
         ViewModelProviders.of(this, SeachViewModel.Factory(activity.application))
@@ -34,8 +34,10 @@ class SearchFragment : Fragment() {
     ): View? {
 
         val binding: FragmentSearchBinding = DataBindingUtil.inflate(
-            inflater, R.layout.fragment_search, container, false)
+            inflater, R.layout.fragment_search, container, false
+        )
         binding.lifecycleOwner = viewLifecycleOwner
+
         binding.viewModel = viewModel
 
         searchAdapter = SearchAdapter(DomainModelClickListener {
@@ -49,31 +51,23 @@ class SearchFragment : Fragment() {
 
 
         viewModel.eventNetworkError.observe(this, Observer {
-            if(it) onNetworkError()
+            if (it) onNetworkError()
         })
-
-        viewModel.searchList.observe(this, Observer {
-            it?.let {
-
-            }
-        })
-
-        viewModel.refreshSearchListFromRepository("between")
-
-        return  binding.root
+        binding.testSearchButton.setOnClickListener {
+            viewModel.refreshSearchListFromRepository("between")
+        }
+        return binding.root
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel.searchList.observe(viewLifecycleOwner, Observer {
-            it?.apply {
-                searchAdapter.submitDomainModelListInCoroutine(it)
-            }
+            searchAdapter.submitDomainModelListInCoroutine(it)
         })
     }
 
     private fun onNetworkError() {
-        if(!viewModel.isNetworkErrorShown.value!!) {
+        if (!viewModel.isNetworkErrorShown.value!!) {
             Toast.makeText(activity, "Network Error", Toast.LENGTH_LONG).show()
             viewModel.onNetworkErrorShown()
         }
