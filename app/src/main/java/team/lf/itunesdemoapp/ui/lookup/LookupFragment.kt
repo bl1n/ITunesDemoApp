@@ -9,7 +9,7 @@ import androidx.fragment.app.Fragment
 import team.lf.itunesdemoapp.R
 import team.lf.itunesdemoapp.databinding.FragmentLookupBinding
 
-class AlbumDetailFragment: Fragment() {
+class LookupFragment: Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater,

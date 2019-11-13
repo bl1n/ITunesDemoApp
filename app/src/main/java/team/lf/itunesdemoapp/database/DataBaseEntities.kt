@@ -3,6 +3,7 @@ package team.lf.itunesdemoapp.database
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import team.lf.itunesdemoapp.domain.DomainModel
+import kotlin.text.Typography.copyright
 
 
 @Entity
@@ -69,7 +70,7 @@ fun List<DBSearchResult>.asDomainModel():List<DomainModel>{
             "collection" -> DomainModel.Collection(
                 artistId = it.artistId!!,
                 artistName = it.artistName!!,
-                artistViewUrl = it.artistViewUrl!!,
+                artistViewUrl = it.artistViewUrl?:"",
                 artworkUrl100 = it.artworkUrl100!!,
                 artworkUrl60 = it.artworkUrl60!!,
                 id = it.collectionId!!,

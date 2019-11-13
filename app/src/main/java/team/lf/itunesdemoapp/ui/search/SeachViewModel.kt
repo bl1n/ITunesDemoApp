@@ -9,12 +9,13 @@ import kotlinx.coroutines.launch
 import team.lf.itunesdemoapp.database.getDatabase
 import team.lf.itunesdemoapp.repository.ITunesRepository
 import java.io.IOException
+import java.lang.Exception
 
 class SeachViewModel(application: Application) : AndroidViewModel(application) {
 
     private val repository = ITunesRepository(getDatabase(application.applicationContext))
 
-    val serchList = repository.searchList
+    val searchList = repository.searchList
 
     private val viewModelJob = SupervisorJob()
     private val viewModelScope = CoroutineScope(viewModelJob + Dispatchers.Main)
@@ -27,17 +28,28 @@ class SeachViewModel(application: Application) : AndroidViewModel(application) {
         get() = _isNetworkErrorShown
 
     init {
-
+        clearDatabase()
     }
 
-    private fun refreshSearchListFromRepository(term: String) {
+    private fun clearDatabase() {
         viewModelScope.launch {
             try {
+                repository.clearDatabase()
+            } catch (e: Exception) {
+                TODO()
+            }
+        }
+    }
+
+    fun refreshSearchListFromRepository(term: String) {
+        viewModelScope.launch {
+            try {
+                repository.clearDatabase()
                 repository.refreshSearchList(term)
                 _eventNetworkError.value = false
                 _isNetworkErrorShown.value = false
 
-            } catch (networkError: IOException){
+            } catch (networkError: IOException) {
                 _eventNetworkError.value = true
             }
         }
@@ -52,7 +64,7 @@ class SeachViewModel(application: Application) : AndroidViewModel(application) {
         viewModelJob.cancel()
     }
 
-    class Factory(val app: Application) : ViewModelProvider.Factory {
+    class Factory(private val app: Application) : ViewModelProvider.Factory {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
             if (modelClass.isAssignableFrom(SeachViewModel::class.java)) {
                 @Suppress("UNCHECKED_CAST")

@@ -24,4 +24,10 @@ class ITunesRepository(private val database: ITunesDemoDatabase) {
             database.iTunesDemoDao.insertAll(searchList.asDBModel())
         }
     }
+
+    suspend fun clearDatabase(){
+        withContext(Dispatchers.IO){
+            database.iTunesDemoDao.clear()
+        }
+    }
 }

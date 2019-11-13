@@ -11,6 +11,9 @@ interface ITunesDemoDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAll(results: List<DBSearchResult>)
+
+    @Query("DELETE FROM DBSearchResult")
+    fun clear()
 }
 
 @Database(entities = [DBSearchResult::class], version = 1)
