@@ -1,4 +1,4 @@
-package team.lf.itunesdemoapp.ui.search
+package team.lf.itunesdemoapp.ui.lookup
 
 import android.app.Application
 import androidx.lifecycle.*
@@ -7,17 +7,18 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 import team.lf.itunesdemoapp.database.getDatabase
+import team.lf.itunesdemoapp.domain.DomainModel
 import team.lf.itunesdemoapp.repository.ITunesRepository
 import timber.log.Timber
 import java.io.IOException
-import java.lang.Exception
 
-class SeachViewModel(application: Application) : AndroidViewModel(application) {
+class LookupViewModel(application: Application, wrapperType: String, id: String): AndroidViewModel(application) {
 
     private val repository = ITunesRepository(getDatabase(application.applicationContext))
-
-    val searchList = repository.searchList
-
+    val lookupList = when(wrapperType){
+        "collection" -> repository.getTracksByCollectionId(id)
+        else -> repository.getTracksByCollectionId(id)
+    }
     private val viewModelJob = SupervisorJob()
     private val viewModelScope = CoroutineScope(viewModelJob + Dispatchers.Main)
 
@@ -29,23 +30,21 @@ class SeachViewModel(application: Application) : AndroidViewModel(application) {
         get() = _isNetworkErrorShown
 
     init {
-        refreshSearchListFromRepository("")
+        getLookupNetworkContainer(wrapperType, id)
     }
 
-    fun refreshSearchListFromRepository(term: String) {
-        if (term != "")
-            viewModelScope.launch {
-                try {
-                    Timber.d("refresh")
-                    repository.clearDatabase()
-                    repository.refreshSearchList(term)
-                    _eventNetworkError.value = false
-                    _isNetworkErrorShown.value = false
+    private fun getLookupNetworkContainer(wrapperType: String, id: String) {
+        viewModelScope.launch {
+            try {
+                Timber.d("getLookupNetworkContainer")
+                repository.getAndSaveNetworkContainer(wrapperType, id)
+                _eventNetworkError.value = false
+                _isNetworkErrorShown.value = false
 
-                } catch (networkError: IOException) {
-                    _eventNetworkError.value = true
-                }
+            } catch (networkError: IOException) {
+                _eventNetworkError.value = true
             }
+        }
     }
 
     fun onNetworkErrorShown() {
@@ -57,14 +56,15 @@ class SeachViewModel(application: Application) : AndroidViewModel(application) {
         viewModelJob.cancel()
     }
 
-    class Factory(private val app: Application) : ViewModelProvider.Factory {
+    class Factory(private val app: Application, private val wrapperType: String, private val id: String) : ViewModelProvider.Factory {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            if (modelClass.isAssignableFrom(SeachViewModel::class.java)) {
+            if (modelClass.isAssignableFrom(LookupViewModel::class.java)) {
                 @Suppress("UNCHECKED_CAST")
-                return SeachViewModel(app) as T
+                return LookupViewModel(app, wrapperType, id) as T
             }
             throw IllegalArgumentException("Unable to construct viewmodel")
         }
     }
+
 
 }

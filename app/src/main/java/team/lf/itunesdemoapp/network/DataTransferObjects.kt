@@ -2,6 +2,8 @@ package team.lf.itunesdemoapp.network
 
 import com.squareup.moshi.JsonClass
 import team.lf.itunesdemoapp.database.DBSearchResult
+import team.lf.itunesdemoapp.database.DatabaseModel
+import team.lf.itunesdemoapp.domain.DomainModel
 
 @JsonClass(generateAdapter = true)
 data class NetworkContainer(
@@ -12,12 +14,12 @@ data class NetworkContainer(
 @JsonClass(generateAdapter = true)
 data class NetSearchResult(
     val wrapperType: String,
-    val artistId: Long?,
+    val artistId: String?,
     val artistName: String?,
     val artistViewUrl: String?,
     val artworkUrl100: String?,
     val artworkUrl60: String?,
-    val collectionId: Long?,
+    val collectionId: String?,
     val collectionName: String?,
     val collectionPrice: Double?,
     val collectionType: String?,
@@ -32,7 +34,7 @@ data class NetSearchResult(
     val isStreamable: Boolean?,
     val kind: String?,
     val previewUrl: String?,
-    val trackId: Long?,
+    val trackId: String?,
     val trackName: String?,
     val trackNumber: Int?,
     val trackPrice: Double?,
@@ -40,6 +42,63 @@ data class NetSearchResult(
     val trackViewUrl: String?,
     val artistLinkUrl: String?
 )
+fun NetworkContainer.asDatabaseModel():List<DatabaseModel>{
+    return this.results.map {
+        when(it.wrapperType){
+            "track" -> DatabaseModel.Track(
+                artistId = it.artistId!!,
+                artistName = it.artistName!!,
+                artistViewUrl = it.artistViewUrl!!,
+                artworkUrl100 = it.artworkUrl100!!,
+                artworkUrl30 = it.artworkUrl30!!,
+                artworkUrl60 = it.artworkUrl60!!,
+                collectionId = it.collectionId!!,
+                collectionName = it.collectionName!!,
+                collectionPrice = it.collectionPrice!!,
+                collectionViewUrl = it.collectionViewUrl!!,
+                country = it.country!!,
+                currency = it.currency!!,
+                isStreamable = it.isStreamable!!,
+                kind = it.kind!!,
+                previewUrl = it.previewUrl!!,
+                primaryGenreName = it.primaryGenreName!!,
+                releaseDate = it.releaseDate!!,
+                id = it.trackId!!,
+                trackName = it.trackName!!,
+                trackNumber = it.trackNumber!!,
+                trackPrice = it.trackPrice!!,
+                trackTimeMillis = it.trackTimeMillis!!,
+                trackViewUrl = it.trackViewUrl!!
+            )
+            "collection" -> DatabaseModel.Collection(
+                artistId = it.artistId!!,
+                artistName = it.artistName!!,
+                artistViewUrl = it.artistViewUrl?:"",
+                artworkUrl100 = it.artworkUrl100!!,
+                artworkUrl60 = it.artworkUrl60!!,
+                id = it.collectionId!!,
+                collectionName = it.collectionName!!,
+                collectionPrice = it.collectionPrice!!,
+                collectionType = it.collectionType!!,
+                collectionViewUrl = it.collectionViewUrl!!,
+                copyright = it.copyright!!,
+                country = it.country!!,
+                currency = it.currency!!,
+                primaryGenreName = it.primaryGenreName!!,
+                releaseDate = it.releaseDate!!,
+                trackCount = it.trackCount!!
+            )
+            else-> DatabaseModel.Artist(
+                id = it.artistId!!,
+                artistLinkUrl = it.artistLinkUrl!!,
+                artistName = it.artistName!!,
+                primaryGenreName = it.primaryGenreName!!
+            )
+        }
+    }
+}
+
+
 
 fun NetworkContainer.asDBModel() :List<DBSearchResult>{
     return this.results.map {
