@@ -23,11 +23,17 @@ private val retrofit = Retrofit.Builder()
 
 interface ITunesApiService {
     @GET("search")
-    fun getCollectionsByColeectionName(
+    fun getCollectionsByCollectionNameAsync(
         @Query("term") term: String,
         @Query("entity") entity: String = "album",
         @Query("attribute") attribute: String = "albumTerm"
     ) : Deferred<NetworkContainer>
+
+    @GET("lookup")
+    fun getTracksByCollectionIdAsync(
+        @Query("id") id: String,
+        @Query("entity") entity: String = "song"
+    ): Deferred<NetworkContainer>
 }
 
 object ITunesApi{

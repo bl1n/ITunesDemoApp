@@ -16,5 +16,12 @@
     <fragment
         android:id="@+id/albumDetailFragment"
         android:name="team.lf.itunesdemoapp.ui.lookup.LookupFragment"
-        android:label="AlbumDetailFragment" />
+        android:label="AlbumDetailFragment" >
+        <argument
+            android:name="wrapperType"
+            app:argType="string" />
+        <argument
+            android:name="id"
+            app:argType="string" />
+    </fragment>
 </navigation>

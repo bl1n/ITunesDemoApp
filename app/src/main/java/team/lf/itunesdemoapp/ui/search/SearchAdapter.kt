@@ -105,6 +105,6 @@ class SearchDiffCallback : DiffUtil.ItemCallback<DomainModel>() {
     }
 }
 
-class DomainModelClickListener(val clickListener: (id: Long) -> Unit) {
+class DomainModelClickListener(val clickListener: (id: String) -> Unit) {
     fun onClick(domainModel: DomainModel) = clickListener(domainModel.id)
 }

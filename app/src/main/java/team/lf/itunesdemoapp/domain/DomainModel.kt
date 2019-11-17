@@ -3,12 +3,12 @@ package team.lf.itunesdemoapp.domain
 
 sealed class DomainModel {
     data class Collection(
-        val artistId: Long,
+        val artistId: String,
         val artistName: String,
         val artistViewUrl: String,
         val artworkUrl100: String,
         val artworkUrl60: String,
-        override val id: Long,
+        override val id: String,
         val collectionName: String,
         val collectionPrice: Double,
         val collectionType: String,
@@ -22,13 +22,13 @@ sealed class DomainModel {
     ) : DomainModel()
 
     data class Track(
-        val artistId: Long,
+        val artistId: String,
         val artistName: String,
         val artistViewUrl: String,
         val artworkUrl100: String,
         val artworkUrl30: String,
         val artworkUrl60: String,
-        val collectionId: Long,
+        val collectionId: String,
         val collectionName: String,
         val collectionPrice: Double,
         val collectionViewUrl: String,
@@ -39,7 +39,7 @@ sealed class DomainModel {
         val previewUrl: String,
         val primaryGenreName: String,
         val releaseDate: String,
-        override val id: Long,
+        override val id: String,
         val trackName: String,
         val trackNumber: Int,
         val trackPrice: Double,
@@ -48,17 +48,17 @@ sealed class DomainModel {
     ) : DomainModel()
 
     data class Artist(
-        override val id: Long,
+        override val id: String,
         val artistLinkUrl: String,
         val artistName: String,
         val primaryGenreName: String
     ) : DomainModel()
 
     object Header: DomainModel() {
-        override val id = Long.MIN_VALUE
+        override val id = ""
     }
 
-    abstract val id: Long
+    abstract val id: String
 }
 
 
