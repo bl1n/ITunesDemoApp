@@ -10,7 +10,6 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import team.lf.itunesdemoapp.R
 import team.lf.itunesdemoapp.databinding.FragmentLookupBinding
-import team.lf.itunesdemoapp.ui.search.SeachViewModel
 
 class LookupFragment : Fragment() {
 

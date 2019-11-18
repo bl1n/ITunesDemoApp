@@ -2,8 +2,9 @@ package team.lf.itunesdemoapp.network
 
 import com.squareup.moshi.JsonClass
 import team.lf.itunesdemoapp.database.DBSearchResult
-import team.lf.itunesdemoapp.database.DatabaseModel
-import team.lf.itunesdemoapp.domain.DomainModel
+import team.lf.itunesdemoapp.database.LookupEntity
+import team.lf.itunesdemoapp.domain.DomainModel.Header.id
+import kotlin.text.Typography.copyright
 
 @JsonClass(generateAdapter = true)
 data class NetworkContainer(
@@ -21,7 +22,7 @@ data class NetSearchResult(
     val artworkUrl60: String?,
     val collectionId: String?,
     val collectionName: String?,
-    val collectionPrice: Double?,
+    val collectionPrice: String?,
     val collectionType: String?,
     val collectionViewUrl: String?,
     val copyright: String?,
@@ -37,15 +38,15 @@ data class NetSearchResult(
     val trackId: String?,
     val trackName: String?,
     val trackNumber: Int?,
-    val trackPrice: Double?,
+    val trackPrice: String?,
     val trackTimeMillis: Long?,
     val trackViewUrl: String?,
     val artistLinkUrl: String?
 )
-fun NetworkContainer.asDatabaseModel():List<DatabaseModel>{
+fun NetworkContainer.asDatabaseModel():List<LookupEntity>{
     return this.results.map {
         when(it.wrapperType){
-            "track" -> DatabaseModel.Track(
+            "track" -> LookupEntity.Track(
                 artistId = it.artistId!!,
                 artistName = it.artistName!!,
                 artistViewUrl = it.artistViewUrl!!,
@@ -58,7 +59,7 @@ fun NetworkContainer.asDatabaseModel():List<DatabaseModel>{
                 collectionViewUrl = it.collectionViewUrl!!,
                 country = it.country!!,
                 currency = it.currency!!,
-                isStreamable = it.isStreamable!!,
+                isStreamable = it.isStreamable?:false,
                 kind = it.kind!!,
                 previewUrl = it.previewUrl!!,
                 primaryGenreName = it.primaryGenreName!!,
@@ -70,7 +71,7 @@ fun NetworkContainer.asDatabaseModel():List<DatabaseModel>{
                 trackTimeMillis = it.trackTimeMillis!!,
                 trackViewUrl = it.trackViewUrl!!
             )
-            "collection" -> DatabaseModel.Collection(
+            "collection" -> LookupEntity.Collection(
                 artistId = it.artistId!!,
                 artistName = it.artistName!!,
                 artistViewUrl = it.artistViewUrl?:"",
@@ -88,7 +89,7 @@ fun NetworkContainer.asDatabaseModel():List<DatabaseModel>{
                 releaseDate = it.releaseDate!!,
                 trackCount = it.trackCount!!
             )
-            else-> DatabaseModel.Artist(
+            else-> LookupEntity.Artist(
                 id = it.artistId!!,
                 artistLinkUrl = it.artistLinkUrl!!,
                 artistName = it.artistName!!,

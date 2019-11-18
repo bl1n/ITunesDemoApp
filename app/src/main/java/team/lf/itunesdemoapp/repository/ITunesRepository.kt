@@ -4,10 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import team.lf.itunesdemoapp.database.DatabaseModel
-import team.lf.itunesdemoapp.database.ITunesDemoDatabase
-import team.lf.itunesdemoapp.database.asDomainModel
-import team.lf.itunesdemoapp.database.asDomainTrackModel
+import team.lf.itunesdemoapp.database.*
 import team.lf.itunesdemoapp.domain.DomainModel
 import team.lf.itunesdemoapp.network.ITunesApi
 import team.lf.itunesdemoapp.network.NetworkContainer
@@ -38,9 +35,9 @@ class ITunesRepository(private val database: ITunesDemoDatabase) {
             val lookupList = getLookupListFromDB(wrapperType, id)
             lookupList.asDatabaseModel().map {
                 when (it) {
-                    is DatabaseModel.Collection -> database.iTunesDemoDao.insertCollection(it)
-                    is DatabaseModel.Track -> database.iTunesDemoDao.insertTrack(it)
-                    is DatabaseModel.Artist -> database.iTunesDemoDao.insertArtist(it)
+                    is LookupEntity.Collection -> database.iTunesDemoDao.insertCollection(it)
+                    is LookupEntity.Track -> database.iTunesDemoDao.insertTrack(it)
+                    is LookupEntity.Artist -> database.iTunesDemoDao.insertArtist(it)
                 }
             }
 
@@ -74,6 +71,12 @@ class ITunesRepository(private val database: ITunesDemoDatabase) {
     fun getTracksByCollectionId(id: String): LiveData<List<DomainModel.Track>> {
         return Transformations.map(database.iTunesDemoDao.getTracksByCollectionsId(id)){
             it.asDomainTrackModel()
+        }
+    }
+
+    fun getCollectionsByCollectionName(term: String): LiveData<List<DomainModel.Collection>>{
+        return Transformations.map(database.iTunesDemoDao.getCollectionsByCollectionName(term)){
+            it.asDomainCollectionModel()
         }
     }
 }

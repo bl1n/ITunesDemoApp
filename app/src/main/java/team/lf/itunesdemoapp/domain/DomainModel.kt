@@ -10,7 +10,7 @@ sealed class DomainModel {
         val artworkUrl60: String,
         override val id: String,
         val collectionName: String,
-        val collectionPrice: Double,
+        val collectionPrice: String,
         val collectionType: String,
         val collectionViewUrl: String,
         val copyright: String,
@@ -30,7 +30,7 @@ sealed class DomainModel {
         val artworkUrl60: String,
         val collectionId: String,
         val collectionName: String,
-        val collectionPrice: Double,
+        val collectionPrice: String,
         val collectionViewUrl: String,
         val country: String,
         val currency: String,
@@ -42,7 +42,7 @@ sealed class DomainModel {
         override val id: String,
         val trackName: String,
         val trackNumber: Int,
-        val trackPrice: Double,
+        val trackPrice: String,
         val trackTimeMillis: Long,
         val trackViewUrl: String
     ) : DomainModel()

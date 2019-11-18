@@ -17,7 +17,7 @@ class LookupViewModel(application: Application, wrapperType: String, id: String)
     private val repository = ITunesRepository(getDatabase(application.applicationContext))
     val lookupList = when(wrapperType){
         "collection" -> repository.getTracksByCollectionId(id)
-        else -> repository.getTracksByCollectionId(id)
+        else -> repository.getTracksByCollectionId(id) //todo
     }
     private val viewModelJob = SupervisorJob()
     private val viewModelScope = CoroutineScope(viewModelJob + Dispatchers.Main)

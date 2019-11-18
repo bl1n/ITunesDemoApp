@@ -17,12 +17,12 @@ import team.lf.itunesdemoapp.databinding.FragmentSearchBinding
 
 class SearchFragment : Fragment() {
 
-    private val viewModel: SeachViewModel by lazy {
+    private val viewModel: SearchViewModel by lazy {
         val activity = requireNotNull(this.activity) {
             "You can only access the viewModel after onActivityCreated()"
         }
-        ViewModelProviders.of(this, SeachViewModel.Factory(activity.application))
-            .get(SeachViewModel::class.java)
+        ViewModelProviders.of(this, SearchViewModel.Factory(activity.application))
+            .get(SearchViewModel::class.java)
     }
 
     private lateinit var searchAdapter: SearchAdapter
@@ -58,7 +58,9 @@ class SearchFragment : Fragment() {
             if (it) onNetworkError()
         })
         binding.testSearchButton.setOnClickListener {
-            viewModel.refreshSearchListFromRepository("jack")
+            val toSearch = binding.testEditText.text.toString()
+            if (!toSearch.isBlank())
+                viewModel.refreshSearchListFromRepository(toSearch)
         }
         return binding.root
     }

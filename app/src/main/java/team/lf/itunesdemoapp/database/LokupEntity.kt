@@ -4,7 +4,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import team.lf.itunesdemoapp.domain.DomainModel
 
-sealed class DatabaseModel {
+sealed class LookupEntity {
     @Entity(tableName = "collections")
     data class Collection(
         val artistId: String,
@@ -14,7 +14,7 @@ sealed class DatabaseModel {
         val artworkUrl60: String,
         @PrimaryKey val id: String,
         val collectionName: String,
-        val collectionPrice: Double,
+        val collectionPrice: String,
         val collectionType: String,
         val collectionViewUrl: String,
         val copyright: String,
@@ -23,7 +23,7 @@ sealed class DatabaseModel {
         val primaryGenreName: String,
         val releaseDate: String,
         val trackCount: Int
-    ) : DatabaseModel()
+    ) : LookupEntity()
 
     @Entity(tableName = "tracks")
     data class Track(
@@ -35,7 +35,7 @@ sealed class DatabaseModel {
         val artworkUrl60: String,
         val collectionId: String,
         val collectionName: String,
-        val collectionPrice: Double,
+        val collectionPrice: String,
         val collectionViewUrl: String,
         val country: String,
         val currency: String,
@@ -47,10 +47,10 @@ sealed class DatabaseModel {
         @PrimaryKey val id: String,
         val trackName: String,
         val trackNumber: Int,
-        val trackPrice: Double,
+        val trackPrice: String,
         val trackTimeMillis: Long,
         val trackViewUrl: String
-    ) : DatabaseModel()
+    ) : LookupEntity()
 
     @Entity(tableName = "artists")
     data class Artist(
@@ -58,66 +58,10 @@ sealed class DatabaseModel {
         val artistLinkUrl: String,
         val artistName: String,
         val primaryGenreName: String
-    ) : DatabaseModel()
+    ) : LookupEntity()
 }
 
-fun List<DatabaseModel>.asDomainModel():List<DomainModel>{
-    return map {
-        when(it){
-            is DatabaseModel.Collection -> DomainModel.Collection(
-                artistId = it.artistId,
-                artistName = it.artistName,
-                artistViewUrl = it.artistViewUrl,
-                artworkUrl100 = it.artworkUrl100,
-                artworkUrl60 = it.artworkUrl60,
-                id = it.id,
-                collectionName = it.collectionName,
-                collectionPrice = it.collectionPrice,
-                collectionType = it.collectionType,
-                collectionViewUrl = it.collectionViewUrl,
-                copyright = it.copyright,
-                country = it.country,
-                currency = it.currency,
-                primaryGenreName = it.primaryGenreName,
-                releaseDate = it.releaseDate,
-                trackCount = it.trackCount
-            )
-            is DatabaseModel.Track -> DomainModel.Track(
-                artistId = it.artistId,
-                artistName = it.artistName,
-                artistViewUrl = it.artistViewUrl,
-                artworkUrl100 = it.artworkUrl100,
-                artworkUrl30 = it.artworkUrl30,
-                artworkUrl60 = it.artworkUrl60,
-                collectionId = it.collectionId,
-                collectionName = it.collectionName,
-                collectionPrice = it.collectionPrice,
-                collectionViewUrl = it.collectionViewUrl,
-                country = it.country,
-                currency = it.currency,
-                isStreamable = it.isStreamable,
-                kind = it.kind,
-                previewUrl = it.previewUrl,
-                primaryGenreName = it.primaryGenreName,
-                releaseDate = it.releaseDate,
-                trackName = it.trackName,
-                trackNumber = it.trackNumber,
-                trackPrice = it.trackPrice,
-                trackTimeMillis = it.trackTimeMillis,
-                trackViewUrl = it.trackViewUrl,
-                id = it.id
-            )
-            is DatabaseModel.Artist -> DomainModel.Artist(
-                id = it.id,
-                artistLinkUrl = it.artistLinkUrl,
-                artistName = it.artistName,
-                primaryGenreName = it.primaryGenreName
-            )
-        }
-    }
-}
-
-fun List<DatabaseModel.Track>.asDomainTrackModel():List<DomainModel.Track>{
+fun List<LookupEntity.Track>.asDomainTrackModel():List<DomainModel.Track>{
     return this.map {
         DomainModel.Track(
             artistId = it.artistId,
@@ -147,7 +91,7 @@ fun List<DatabaseModel.Track>.asDomainTrackModel():List<DomainModel.Track>{
     }
 }
 
-fun List<DatabaseModel.Collection>.asDomainCollectionModel(): List<DomainModel.Collection>{
+fun List<LookupEntity.Collection>.asDomainCollectionModel(): List<DomainModel.Collection>{
     return map {
         DomainModel.Collection(
             artistId = it.artistId,
@@ -170,7 +114,7 @@ fun List<DatabaseModel.Collection>.asDomainCollectionModel(): List<DomainModel.C
     }
 }
 
-fun List<DatabaseModel.Artist>.asDomainArtistModel():List<DomainModel.Artist>{
+fun List<LookupEntity.Artist>.asDomainArtistModel():List<DomainModel.Artist>{
     return map {
         DomainModel.Artist(
             id = it.id,
@@ -180,3 +124,59 @@ fun List<DatabaseModel.Artist>.asDomainArtistModel():List<DomainModel.Artist>{
         )
     }
 }
+
+//fun List<LookupEntity>.asDomainModel():List<DomainModel>{
+//    return map {
+//        when(it){
+//            is LookupEntity.Collection -> DomainModel.Collection(
+//                artistId = it.artistId,
+//                artistName = it.artistName,
+//                artistViewUrl = it.artistViewUrl,
+//                artworkUrl100 = it.artworkUrl100,
+//                artworkUrl60 = it.artworkUrl60,
+//                id = it.id,
+//                collectionName = it.collectionName,
+//                collectionPrice = it.collectionPrice,
+//                collectionType = it.collectionType,
+//                collectionViewUrl = it.collectionViewUrl,
+//                copyright = it.copyright,
+//                country = it.country,
+//                currency = it.currency,
+//                primaryGenreName = it.primaryGenreName,
+//                releaseDate = it.releaseDate,
+//                trackCount = it.trackCount
+//            )
+//            is LookupEntity.Track -> DomainModel.Track(
+//                artistId = it.artistId,
+//                artistName = it.artistName,
+//                artistViewUrl = it.artistViewUrl,
+//                artworkUrl100 = it.artworkUrl100,
+//                artworkUrl30 = it.artworkUrl30,
+//                artworkUrl60 = it.artworkUrl60,
+//                collectionId = it.collectionId,
+//                collectionName = it.collectionName,
+//                collectionPrice = it.collectionPrice,
+//                collectionViewUrl = it.collectionViewUrl,
+//                country = it.country,
+//                currency = it.currency,
+//                isStreamable = it.isStreamable,
+//                kind = it.kind,
+//                previewUrl = it.previewUrl,
+//                primaryGenreName = it.primaryGenreName,
+//                releaseDate = it.releaseDate,
+//                trackName = it.trackName,
+//                trackNumber = it.trackNumber,
+//                trackPrice = it.trackPrice,
+//                trackTimeMillis = it.trackTimeMillis,
+//                trackViewUrl = it.trackViewUrl,
+//                id = it.id
+//            )
+//            is LookupEntity.Artist -> DomainModel.Artist(
+//                id = it.id,
+//                artistLinkUrl = it.artistLinkUrl,
+//                artistName = it.artistName,
+//                primaryGenreName = it.primaryGenreName
+//            )
+//        }
+//    }
+//}

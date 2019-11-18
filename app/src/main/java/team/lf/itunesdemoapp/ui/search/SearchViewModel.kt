@@ -7,12 +7,12 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 import team.lf.itunesdemoapp.database.getDatabase
+import team.lf.itunesdemoapp.domain.DomainModel
 import team.lf.itunesdemoapp.repository.ITunesRepository
 import timber.log.Timber
 import java.io.IOException
-import java.lang.Exception
 
-class SeachViewModel(application: Application) : AndroidViewModel(application) {
+class SearchViewModel(application: Application) : AndroidViewModel(application) {
 
     private val repository = ITunesRepository(getDatabase(application.applicationContext))
 
@@ -28,12 +28,14 @@ class SeachViewModel(application: Application) : AndroidViewModel(application) {
     val isNetworkErrorShown: LiveData<Boolean>
         get() = _isNetworkErrorShown
 
+
+
     init {
         refreshSearchListFromRepository("")
     }
 
     fun refreshSearchListFromRepository(term: String) {
-        if (term != "")
+        if (term != ""){
             viewModelScope.launch {
                 try {
                     Timber.d("refresh")
@@ -46,6 +48,8 @@ class SeachViewModel(application: Application) : AndroidViewModel(application) {
                     _eventNetworkError.value = true
                 }
             }
+        }
+
     }
 
     fun onNetworkErrorShown() {
@@ -59,9 +63,9 @@ class SeachViewModel(application: Application) : AndroidViewModel(application) {
 
     class Factory(private val app: Application) : ViewModelProvider.Factory {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            if (modelClass.isAssignableFrom(SeachViewModel::class.java)) {
+            if (modelClass.isAssignableFrom(SearchViewModel::class.java)) {
                 @Suppress("UNCHECKED_CAST")
-                return SeachViewModel(app) as T
+                return SearchViewModel(app) as T
             }
             throw IllegalArgumentException("Unable to construct viewmodel")
         }
