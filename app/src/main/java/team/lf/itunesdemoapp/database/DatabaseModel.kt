@@ -146,3 +146,37 @@ fun List<DatabaseModel.Track>.asDomainTrackModel():List<DomainModel.Track>{
         )
     }
 }
+
+fun List<DatabaseModel.Collection>.asDomainCollectionModel(): List<DomainModel.Collection>{
+    return map {
+        DomainModel.Collection(
+            artistId = it.artistId,
+            artistName = it.artistName,
+            artistViewUrl = it.artistViewUrl,
+            artworkUrl100 = it.artworkUrl100,
+            artworkUrl60 = it.artworkUrl60,
+            id = it.id,
+            collectionName = it.collectionName,
+            collectionPrice = it.collectionPrice,
+            collectionType = it.collectionType,
+            collectionViewUrl = it.collectionViewUrl,
+            copyright = it.copyright,
+            country = it.country,
+            currency = it.currency,
+            primaryGenreName = it.primaryGenreName,
+            releaseDate = it.releaseDate,
+            trackCount = it.trackCount
+        )
+    }
+}
+
+fun List<DatabaseModel.Artist>.asDomainArtistModel():List<DomainModel.Artist>{
+    return map {
+        DomainModel.Artist(
+            id = it.id,
+            artistLinkUrl = it.artistLinkUrl,
+            artistName = it.artistName,
+            primaryGenreName = it.primaryGenreName
+        )
+    }
+}

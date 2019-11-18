@@ -35,18 +35,7 @@ class ITunesRepository(private val database: ITunesDemoDatabase) {
 
     suspend fun getAndSaveNetworkContainer(wrapperType: String, id: String) {
         withContext(Dispatchers.IO) {
-            val lookupList = when (wrapperType) {
-                "collection" -> {
-
-                    ITunesApi.retrofitService.getTracksByCollectionIdAsync(id).await()
-                }
-                "track" -> {
-                    ITunesApi.retrofitService.getTracksByCollectionIdAsync(id).await()
-                } //todo метод для посика инфо по трэку, если нужен
-                else -> {
-                    ITunesApi.retrofitService.getTracksByCollectionIdAsync(id).await()
-                } //todo метод для поиска инфы по исполнителю
-            }
+            val lookupList = getLookupListFromDB(wrapperType, id)
             lookupList.asDatabaseModel().map {
                 when (it) {
                     is DatabaseModel.Collection -> database.iTunesDemoDao.insertCollection(it)
@@ -55,6 +44,23 @@ class ITunesRepository(private val database: ITunesDemoDatabase) {
                 }
             }
 
+        }
+    }
+
+    private suspend fun getLookupListFromDB(
+        wrapperType: String,
+        id: String
+    ): NetworkContainer {
+        return when (wrapperType) {
+            "collection" -> {
+                ITunesApi.retrofitService.getTracksByCollectionIdAsync(id).await()
+            }
+            "track" -> {
+                ITunesApi.retrofitService.getTracksByCollectionIdAsync(id).await()
+            } //todo метод для поиска инфо по трэку, если нужен
+            else -> {
+                ITunesApi.retrofitService.getTracksByCollectionIdAsync(id).await()
+            } //todo метод для поиска инфы по исполнителю
         }
     }
 

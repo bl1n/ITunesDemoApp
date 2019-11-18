@@ -44,7 +44,7 @@ class SearchFragment : Fragment() {
         searchAdapter = SearchAdapter(DomainModelClickListener {
             Toast.makeText(this.context, "$it", Toast.LENGTH_SHORT).show()
             this.findNavController().navigate(
-                SearchFragmentDirections.actionAlbumListFragmentToAlbumDetailFragment("collection", it)
+                SearchFragmentDirections.actionSearchFragmentToLookupFragment("collection", it)
             )
         })
 

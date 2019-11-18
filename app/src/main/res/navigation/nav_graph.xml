@@ -1,22 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/nav_graph"
-    app:startDestination="@id/albumListFragment">
+    app:startDestination="@id/searchFragment">
 
     <fragment
-        android:id="@+id/albumListFragment"
+        android:id="@+id/searchFragment"
         android:name="team.lf.itunesdemoapp.ui.search.SearchFragment"
-        android:label="AlbumListFragment" >
+        android:label="SearchFragment" >
         <action
-            android:id="@+id/action_albumListFragment_to_albumDetailFragment"
-            app:destination="@id/albumDetailFragment"
-            app:popUpTo="@+id/albumListFragment"
-            app:popUpToInclusive="false" />
+            android:id="@+id/action_searchFragment_to_lookupFragment"
+            app:destination="@id/lookupFragment" />
     </fragment>
     <fragment
-        android:id="@+id/albumDetailFragment"
+        android:id="@+id/lookupFragment"
         android:name="team.lf.itunesdemoapp.ui.lookup.LookupFragment"
-        android:label="AlbumDetailFragment" >
+        android:label="LookupFragment" >
         <argument
             android:name="wrapperType"
             app:argType="string" />
