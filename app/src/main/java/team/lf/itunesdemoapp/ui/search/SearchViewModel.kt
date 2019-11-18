@@ -30,9 +30,6 @@ class SearchViewModel(application: Application) : AndroidViewModel(application) 
 
 
 
-    init {
-        refreshSearchListFromRepository("")
-    }
 
     fun refreshSearchListFromRepository(term: String) {
         if (term != ""){
