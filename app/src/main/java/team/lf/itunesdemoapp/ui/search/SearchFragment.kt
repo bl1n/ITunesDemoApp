@@ -42,9 +42,8 @@ class SearchFragment : Fragment() {
         binding.viewModel = viewModel
 
         searchAdapter = SearchAdapter(DomainModelClickListener {
-            Toast.makeText(this.context, "$it", Toast.LENGTH_SHORT).show()
             this.findNavController().navigate(
-                SearchFragmentDirections.actionSearchFragmentToLookupFragment("collection", it)
+                SearchFragmentDirections.actionSearchFragmentToLookupFragment(it[0], it[1])
             )
         })
 

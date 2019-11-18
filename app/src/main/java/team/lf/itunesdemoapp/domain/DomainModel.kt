@@ -18,7 +18,8 @@ sealed class DomainModel {
         val currency: String,
         val primaryGenreName: String,
         val releaseDate: String,
-        val trackCount: Int
+        val trackCount: Int,
+        override val wrapperType:String = "collection"
     ) : DomainModel()
 
     data class Track(
@@ -44,20 +45,24 @@ sealed class DomainModel {
         val trackNumber: Int,
         val trackPrice: String,
         val trackTimeMillis: Long,
-        val trackViewUrl: String
+        val trackViewUrl: String,
+        override val wrapperType:String = "track"
     ) : DomainModel()
 
     data class Artist(
         override val id: String,
         val artistLinkUrl: String,
         val artistName: String,
-        val primaryGenreName: String
+        val primaryGenreName: String,
+        override val wrapperType:String = "artist"
     ) : DomainModel()
 
     object Header: DomainModel() {
+        override val wrapperType = "header"
         override val id = ""
     }
 
+    abstract val wrapperType:String
     abstract val id: String
 }
 

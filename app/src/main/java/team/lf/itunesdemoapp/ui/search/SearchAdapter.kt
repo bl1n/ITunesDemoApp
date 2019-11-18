@@ -50,7 +50,7 @@ class SearchAdapter(private val clickListener: DomainModelClickListener) :
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
             VIEW_TYPE_COLLECTION -> CollectionViewHolder.from(parent)
-            VIEW_TYPE_HEADER-> TextViewHolder.from(parent)
+            VIEW_TYPE_HEADER -> TextViewHolder.from(parent)
             else -> throw ClassCastException("Unknown viewType $viewType")//todo
         }
     }
@@ -65,7 +65,7 @@ class SearchAdapter(private val clickListener: DomainModelClickListener) :
         }
     }
 
-    class TextViewHolder(view: View): RecyclerView.ViewHolder(view) {
+    class TextViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         companion object {
             fun from(parent: ViewGroup): TextViewHolder {
                 val layoutInflater = LayoutInflater.from(parent.context)
@@ -105,6 +105,7 @@ class SearchDiffCallback : DiffUtil.ItemCallback<DomainModel>() {
     }
 }
 
-class DomainModelClickListener(val clickListener: (id: String) -> Unit) {
-    fun onClick(domainModel: DomainModel) = clickListener(domainModel.id)
+class DomainModelClickListener(val clickListener: (list: List<String>) -> Unit) {
+    fun onClick(domainModel: DomainModel) =
+        clickListener(listOf(domainModel.wrapperType, domainModel.id))
 }
