@@ -10,15 +10,15 @@ import team.lf.itunesdemoapp.R
 
 @BindingAdapter("imageUrl")
 fun bindImage(imgView: ImageView, imgUrl: String?) {
-    val image = imgUrl?.replace("100x100bb", "313x0w")
+    val image = imgUrl?.replace("100x100bb", "313x0w") // to get a good image resource
     image?.let {
         val imgUri = image.toUri().buildUpon().scheme("https").build()
         Glide.with(imgView.context)
             .load(imgUri)
             .apply(
                 RequestOptions()
-                    .placeholder(R.drawable.loading_animation)
                     .error(R.drawable.ic_broken_image))
             .into(imgView)
     }
 }
+

@@ -19,6 +19,16 @@
         android:layout_height="match_parent"
         android:fitsSystemWindows="true">
 
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="TextView"
+            app:layout_constraintBottom_toBottomOf="@+id/imageView3"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/imageView3"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <ImageView
             android:id="@+id/imageView3"
             android:layout_width="0dp"
@@ -28,7 +38,9 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:srcCompat="@tools:sample/avatars"
-            imageUrl="@{collection.artworkUrl100}"/>
+            android:scaleType="centerCrop"
+            imageUrl="@{collection.artworkUrl100}"
+            android:translationZ="-1dp"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>
