@@ -19,28 +19,66 @@
         android:layout_height="match_parent"
         android:fitsSystemWindows="true">
 
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="TextView"
-            app:layout_constraintBottom_toBottomOf="@+id/imageView3"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/imageView3"
-            app:layout_constraintTop_toTopOf="parent" />
-
         <ImageView
-            android:id="@+id/imageView3"
+            android:id="@+id/background_for_lookup"
+            imageUrl="@{collection.artworkUrl100}"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:scaleType="centerCrop"
+            android:translationZ="-1dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:srcCompat="@tools:sample/avatars"
-            android:scaleType="centerCrop"
-            imageUrl="@{collection.artworkUrl100}"
-            android:translationZ="-1dp"/>
+            tools:srcCompat="@tools:sample/avatars" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/track_list"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/header_lookup" />
+
+        <ImageView
+            android:id="@+id/header_lookup"
+            android:layout_width="0dp"
+            android:layout_height="96dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@color/colorAccent"
+            android:alpha="30"/>
+
+        <TextView
+            android:id="@+id/collection_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:text="@{collection.collectionName}"
+            app:layout_constraintStart_toStartOf="@+id/header_lookup"
+            app:layout_constraintTop_toTopOf="@+id/header_lookup"
+            tools:text="Collection Name" />
+
+        <TextView
+            android:id="@+id/artist_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:text="@{collection.artistName}"
+            app:layout_constraintStart_toStartOf="@+id/header_lookup"
+            app:layout_constraintTop_toBottomOf="@+id/collection_name"
+            tools:text="Artist Name" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

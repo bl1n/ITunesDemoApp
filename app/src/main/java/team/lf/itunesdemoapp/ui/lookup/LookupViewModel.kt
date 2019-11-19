@@ -12,13 +12,10 @@ import team.lf.itunesdemoapp.repository.ITunesRepository
 import timber.log.Timber
 import java.io.IOException
 
-class LookupViewModel(application: Application, private val collection: DomainModel.Collection): AndroidViewModel(application) {
+class LookupViewModel(application: Application, collection: DomainModel.Collection): AndroidViewModel(application) {
 
     private val repository = ITunesRepository(getDatabase(application.applicationContext))
-    val lookupList = when(collection.wrapperType){
-        "collection" -> repository.getTracksByCollectionId(collection.id)
-        else -> repository.getTracksByCollectionId(collection.id) //todo
-    }
+    val trackList = repository.getTracksByCollectionId(collection.id)
     private val viewModelJob = SupervisorJob()
     private val viewModelScope = CoroutineScope(viewModelJob + Dispatchers.Main)
 
