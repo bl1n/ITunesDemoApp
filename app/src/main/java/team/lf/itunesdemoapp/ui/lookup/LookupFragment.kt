@@ -22,7 +22,7 @@ class LookupFragment : Fragment() {
 
         ViewModelProviders.of(
             this,
-            LookupViewModel.Factory(activity.application, args.wrapperType, args.id)
+            LookupViewModel.Factory(activity.application, args.collection)
         )
             .get(LookupViewModel::class.java)
     }
@@ -35,9 +35,10 @@ class LookupFragment : Fragment() {
         val binding: FragmentLookupBinding = DataBindingUtil.inflate(
             inflater, R.layout.fragment_lookup, container, false
         )
+        binding.collection = LookupFragmentArgs.fromBundle(arguments!!).collection
 
         viewModel.lookupList.observe(this, Observer {
-            binding.textView.text = it.size.toString()
+//            binding.textView.text = it.size.toString()
         })
         return binding.root
     }

@@ -17,10 +17,7 @@
         android:name="team.lf.itunesdemoapp.ui.lookup.LookupFragment"
         android:label="LookupFragment" >
         <argument
-            android:name="wrapperType"
-            app:argType="string" />
-        <argument
-            android:name="id"
-            app:argType="string" />
+            android:name="collection"
+            app:argType="team.lf.itunesdemoapp.domain.DomainModel$Collection" />
     </fragment>
 </navigation>

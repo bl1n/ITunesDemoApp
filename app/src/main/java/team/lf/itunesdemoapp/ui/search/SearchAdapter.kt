@@ -105,7 +105,7 @@ class SearchDiffCallback : DiffUtil.ItemCallback<DomainModel>() {
     }
 }
 
-class DomainModelClickListener(val clickListener: (list: List<String>) -> Unit) {
+class DomainModelClickListener(val clickListener: (collection: DomainModel.Collection) -> Unit) {
     fun onClick(domainModel: DomainModel) =
-        clickListener(listOf(domainModel.wrapperType, domainModel.id))
+        clickListener(domainModel as @kotlin.ParameterName(name = "collection") DomainModel.Collection)
 }

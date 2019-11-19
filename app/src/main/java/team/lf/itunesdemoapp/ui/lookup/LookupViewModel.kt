@@ -12,12 +12,12 @@ import team.lf.itunesdemoapp.repository.ITunesRepository
 import timber.log.Timber
 import java.io.IOException
 
-class LookupViewModel(application: Application, wrapperType: String, id: String): AndroidViewModel(application) {
+class LookupViewModel(application: Application, private val collection: DomainModel.Collection): AndroidViewModel(application) {
 
     private val repository = ITunesRepository(getDatabase(application.applicationContext))
-    val lookupList = when(wrapperType){
-        "collection" -> repository.getTracksByCollectionId(id)
-        else -> repository.getTracksByCollectionId(id) //todo
+    val lookupList = when(collection.wrapperType){
+        "collection" -> repository.getTracksByCollectionId(collection.id)
+        else -> repository.getTracksByCollectionId(collection.id) //todo
     }
     private val viewModelJob = SupervisorJob()
     private val viewModelScope = CoroutineScope(viewModelJob + Dispatchers.Main)
@@ -30,7 +30,7 @@ class LookupViewModel(application: Application, wrapperType: String, id: String)
         get() = _isNetworkErrorShown
 
     init {
-        getLookupNetworkContainer(wrapperType, id)
+        getLookupNetworkContainer(collection.wrapperType, collection.id)
     }
 
     private fun getLookupNetworkContainer(wrapperType: String, id: String) {
@@ -56,11 +56,11 @@ class LookupViewModel(application: Application, wrapperType: String, id: String)
         viewModelJob.cancel()
     }
 
-    class Factory(private val app: Application, private val wrapperType: String, private val id: String) : ViewModelProvider.Factory {
+    class Factory(private val app: Application, private val collection:DomainModel.Collection) : ViewModelProvider.Factory {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
             if (modelClass.isAssignableFrom(LookupViewModel::class.java)) {
                 @Suppress("UNCHECKED_CAST")
-                return LookupViewModel(app, wrapperType, id) as T
+                return LookupViewModel(app, collection) as T
             }
             throw IllegalArgumentException("Unable to construct viewmodel")
         }

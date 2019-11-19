@@ -1,7 +1,12 @@
 package team.lf.itunesdemoapp.domain
 
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
+
 
 sealed class DomainModel {
+
+    @Parcelize
     data class Collection(
         val artistId: String,
         val artistName: String,
@@ -20,7 +25,7 @@ sealed class DomainModel {
         val releaseDate: String,
         val trackCount: Int,
         override val wrapperType:String = "collection"
-    ) : DomainModel()
+    ) : DomainModel(), Parcelable
 
     data class Track(
         val artistId: String,

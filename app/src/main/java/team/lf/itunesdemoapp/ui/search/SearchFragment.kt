@@ -43,7 +43,7 @@ class SearchFragment : Fragment() {
 
         searchAdapter = SearchAdapter(DomainModelClickListener {
             this.findNavController().navigate(
-                SearchFragmentDirections.actionSearchFragmentToLookupFragment(it[0], it[1])
+                SearchFragmentDirections.actionSearchFragmentToLookupFragment(it)
             )
         })
 
