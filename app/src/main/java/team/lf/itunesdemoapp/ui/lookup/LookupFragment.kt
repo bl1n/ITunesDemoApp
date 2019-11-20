@@ -18,6 +18,7 @@ import team.lf.itunesdemoapp.databinding.FragmentLookupBinding
 class LookupFragment : Fragment() {
 
     private lateinit var lookupAdapter: LookupAdapter
+    private lateinit var mediaPlayer: MediaPlayer
 
     private val viewModel: LookupViewModel by lazy {
         val activity = requireNotNull(this.activity) {
@@ -41,11 +42,17 @@ class LookupFragment : Fragment() {
         val binding: FragmentLookupBinding = DataBindingUtil.inflate(
             inflater, R.layout.fragment_lookup, container, false
         )
+
+
+        mediaPlayer = MediaPlayer()
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
         lookupAdapter = LookupAdapter(OnTrackClickListener {
             viewModel.onTrackPlayPressed(it)
-            val mediaPlayer = MediaPlayer()
+
+            //todo move mediaPlayer logic to VM
+            mediaPlayer.release()
+            mediaPlayer = MediaPlayer()
             mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC)
             mediaPlayer.isLooping = false
             mediaPlayer.setDataSource(it.previewUrl)
@@ -72,4 +79,6 @@ class LookupFragment : Fragment() {
         })
         return binding.root
     }
+
+
 }

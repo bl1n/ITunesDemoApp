@@ -53,7 +53,6 @@ class LookupViewModel(application: Application, collection: DomainModel.Collecti
                     repository.updatePlayingStateOfTrack(track.id, trackList.value!!)
                 } else{
                     repository.updatePlayingStateOfTrack("", trackList.value!!)
-
                 }
 
 
