@@ -65,7 +65,8 @@ fun List<DBSearchResult>.asDomainModel():List<DomainModel>{
                 trackNumber = it.trackNumber!!,
                 trackPrice = it.trackPrice!!,
                 trackTimeMillis = it.trackTimeMillis!!,
-                trackViewUrl = it.trackViewUrl!!
+                trackViewUrl = it.trackViewUrl!!,
+                isPlaying = false
             )
             "collection" -> DomainModel.Collection(
                 artistId = it.artistId!!,

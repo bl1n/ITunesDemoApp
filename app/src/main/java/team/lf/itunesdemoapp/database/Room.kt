@@ -42,6 +42,9 @@ interface ITunesDemoDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertTrack(track: LookupEntity.Track)
 
+    @Update
+    fun updateTrack(track:LookupEntity.Track)
+
     //artists
     @Query("select * from artists where artistName = :artistName")
     fun getArtistByArtistName(artistName:String): LiveData<List<LookupEntity.Artist>>

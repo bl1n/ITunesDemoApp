@@ -1,5 +1,6 @@
 package team.lf.itunesdemoapp.database
 
+import android.text.BoringLayout
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import team.lf.itunesdemoapp.domain.DomainModel
@@ -27,6 +28,7 @@ sealed class LookupEntity {
 
     @Entity(tableName = "tracks")
     data class Track(
+        var isPlaying: Boolean = false,
         val artistId: String,
         val artistName: String,
         val artistViewUrl: String,
@@ -86,7 +88,8 @@ fun List<LookupEntity.Track>.asDomainTrackModel():List<DomainModel.Track>{
             trackPrice = it.trackPrice,
             trackTimeMillis = it.trackTimeMillis,
             trackViewUrl = it.trackViewUrl,
-            id = it.id
+            id = it.id,
+            isPlaying = it.isPlaying
         )
     }
 }

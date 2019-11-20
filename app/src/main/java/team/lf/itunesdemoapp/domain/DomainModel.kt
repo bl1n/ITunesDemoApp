@@ -28,6 +28,7 @@ sealed class DomainModel {
     ) : DomainModel(), Parcelable
 
     data class Track(
+        var isPlaying: Boolean,
         val artistId: String,
         val artistName: String,
         val artistViewUrl: String,

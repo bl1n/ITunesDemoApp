@@ -69,7 +69,8 @@ fun NetworkContainer.asDatabaseModel():List<LookupEntity>{
                 trackNumber = it.trackNumber?:0,
                 trackPrice = it.trackPrice?:"",
                 trackTimeMillis = it.trackTimeMillis?: Long.MIN_VALUE,
-                trackViewUrl = it.trackViewUrl?:""
+                trackViewUrl = it.trackViewUrl?:"",
+                isPlaying = false
             )
             "collection" -> LookupEntity.Collection(
                 artistId = it.artistId?:"0",
