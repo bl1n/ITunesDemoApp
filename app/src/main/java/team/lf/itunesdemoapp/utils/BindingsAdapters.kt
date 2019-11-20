@@ -8,7 +8,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import team.lf.itunesdemoapp.R
 
-@BindingAdapter("HQImageCover")
+@BindingAdapter("highQualityImageCover")
 fun bindHQImageCover(imgView: ImageView, imgUrl: String?) {
     val image = imgUrl?.replace("100x100bb", "313x0w") // to get a good image resource
     image?.let {
@@ -17,10 +17,13 @@ fun bindHQImageCover(imgView: ImageView, imgUrl: String?) {
             .load(imgUri)
             .apply(
                 RequestOptions()
-                    .error(R.drawable.ic_broken_image))
+                    .placeholder(R.drawable.loading_animation)
+                    .error(R.drawable.ic_broken_image)
+            )
             .into(imgView)
     }
 }
+
 @BindingAdapter("imageUrl")
 fun bindImage(imgView: ImageView, imgUrl: String?) {
     imgUrl?.let {
@@ -29,7 +32,11 @@ fun bindImage(imgView: ImageView, imgUrl: String?) {
             .load(imgUri)
             .apply(
                 RequestOptions()
-                    .error(R.drawable.ic_broken_image))
+                    .apply(RequestOptions()
+//                        .placeholder(R.drawable.loading_img)
+                        .error(R.drawable.ic_broken_image))
+            )
+
             .into(imgView)
     }
 }

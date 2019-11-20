@@ -23,12 +23,11 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/collection_cover" />
+            app:layout_constraintStart_toEndOf="@+id/collection_cover"
+            app:layout_constraintTop_toTopOf="@+id/collection_cover" />
 
         <ImageView
             android:id="@+id/collection_cover"
@@ -45,27 +44,25 @@
             android:id="@+id/collection_name"
             android:layout_width="0dp"
             android:layout_height="19dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
             android:text="@{collection.collectionName}"
             app:layout_constraintBottom_toTopOf="@+id/collection_year"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/collection_cover"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/collection_cover"
-            app:layout_constraintTop_toTopOf="@+id/collection_cover"
+            app:layout_constraintStart_toStartOf="@+id/collection_cover"
+            app:layout_constraintTop_toBottomOf="@+id/collection_cover"
             tools:text="collection_name" />
 
         <TextView
-            android:id="@+id/collection_year"
+            android:id="@+id/artist_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@{collection.releaseDate}"
-            app:layout_constraintBottom_toTopOf="@+id/collection_genre"
+            android:text="@{collection.artistName}"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/collection_name"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="@+id/collection_name"
-            app:layout_constraintTop_toBottomOf="@+id/collection_name"
-            tools:text="collection_year" />
+            app:layout_constraintTop_toBottomOf="@+id/collection_genre"
+            tools:text="artist_name" />
 
         <TextView
             android:id="@+id/collection_genre"
@@ -80,16 +77,16 @@
             tools:text="collection_genre" />
 
         <TextView
-            android:id="@+id/artist_name"
+            android:id="@+id/collection_year"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@{collection.artistName}"
-            app:layout_constraintBottom_toBottomOf="@+id/collection_cover"
+            android:text="@{collection.releaseDate}"
+            app:layout_constraintBottom_toTopOf="@+id/collection_genre"
             app:layout_constraintEnd_toEndOf="@+id/collection_name"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="@+id/collection_name"
-            app:layout_constraintTop_toBottomOf="@+id/collection_genre"
-            tools:text="artist_name" />
+            app:layout_constraintTop_toBottomOf="@+id/collection_name"
+            tools:text="collection_year" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
