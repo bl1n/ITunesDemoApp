@@ -55,7 +55,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@color/colorAccent"
-            android:alpha="30"/>
+            android:alpha="0.5"/>
 
         <TextView
             android:id="@+id/collection_name"

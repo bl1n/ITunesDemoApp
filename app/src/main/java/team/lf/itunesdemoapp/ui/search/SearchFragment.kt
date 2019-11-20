@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import team.lf.itunesdemoapp.R
@@ -47,8 +48,15 @@ class SearchFragment : Fragment() {
             )
         })
 
+        val manager = GridLayoutManager(activity, 3, GridLayoutManager.VERTICAL, false)
+        manager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
+            override fun getSpanSize(position: Int) =  when (position) {
+                0 -> 3
+                else -> 1
+            }
+        }
         binding.root.findViewById<RecyclerView>(R.id.search_list).apply {
-            layoutManager = LinearLayoutManager(context)
+            layoutManager = manager
             adapter = searchAdapter
         }
 
