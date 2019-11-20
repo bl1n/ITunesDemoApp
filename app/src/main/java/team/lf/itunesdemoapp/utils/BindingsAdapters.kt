@@ -1,12 +1,18 @@
 package team.lf.itunesdemoapp.utils
 
+import android.annotation.SuppressLint
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.net.toUri
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestOptions
 import team.lf.itunesdemoapp.R
+import team.lf.itunesdemoapp.domain.DomainModel
+import java.sql.Timestamp
+import java.text.SimpleDateFormat
 
 @BindingAdapter("highQualityImageCover")
 fun bindHQImageCover(imgView: ImageView, imgUrl: String?) {
@@ -30,15 +36,32 @@ fun bindImage(imgView: ImageView, imgUrl: String?) {
         val imgUri = imgUrl.toUri().buildUpon().scheme("https").build()
         Glide.with(imgView.context)
             .load(imgUri)
+            .transition(DrawableTransitionOptions.withCrossFade())
             .apply(
                 RequestOptions()
                     .apply(RequestOptions()
-//                        .placeholder(R.drawable.loading_img)
                         .error(R.drawable.ic_broken_image))
             )
 
             .into(imgView)
     }
 }
+
+//@BindingAdapter("dateFormatted")
+//fun bindDate(textView: TextView, item: DomainModel.Collection) {
+//    val timestamp = Timestamp.valueOf(item.releaseDate)
+//    textView.text = timestamp.toString()
+//
+////    textView.text =  SimpleDateFormat("YYYY").format(item.releaseDate).toString()
+//}
+
+//@SuppressLint("SimpleDateFormat")
+//fun convertLongToDateString(systemTime: String): String {
+//
+//    return SimpleDateFormat("EEEE MMM-dd-yyyy' Time: 'HH:mm")
+//        .format(systemTime).toString()
+//}
+
+
 
 
