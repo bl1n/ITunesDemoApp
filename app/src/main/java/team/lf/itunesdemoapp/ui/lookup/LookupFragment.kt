@@ -1,5 +1,7 @@
 package team.lf.itunesdemoapp.ui.lookup
 
+import android.media.AudioManager
+import android.media.MediaPlayer
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -43,6 +45,17 @@ class LookupFragment : Fragment() {
         binding.viewModel = viewModel
         lookupAdapter = LookupAdapter(OnTrackClickListener {
             viewModel.onTrackPlayPressed(it)
+            val mediaPlayer = MediaPlayer()
+            mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC)
+            mediaPlayer.isLooping = false
+            mediaPlayer.setDataSource(it.previewUrl)
+            mediaPlayer.prepareAsync()
+            mediaPlayer.setOnPreparedListener {
+                mediaPlayer.start()
+            }
+            mediaPlayer.setOnCompletionListener {
+                viewModel.onTrackPlayingComplete()
+            }
         })
         binding.root.findViewById<RecyclerView>(R.id.track_list).apply {
             layoutManager = LinearLayoutManager(context)

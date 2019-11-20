@@ -1,11 +1,10 @@
 package team.lf.itunesdemoapp.ui.lookup
 
 import android.app.Application
+import android.media.AudioManager
+import android.media.MediaPlayer
 import androidx.lifecycle.*
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.SupervisorJob
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import team.lf.itunesdemoapp.database.getDatabase
 import team.lf.itunesdemoapp.domain.DomainModel
 import team.lf.itunesdemoapp.repository.ITunesRepository
@@ -44,16 +43,27 @@ class LookupViewModel(application: Application, collection: DomainModel.Collecti
         }
     }
 
-    fun onTrackPlayPressed(id: String){
+
+
+    fun onTrackPlayPressed(track: DomainModel.Track?){
         viewModelScope.launch {
             try {
-                Timber.d("onTrackPlay")
-                repository.updatePlayingStateOfTrack(id, trackList.value!!)
+                if(track!= null){
+                    Timber.d("onTrackPlay")
+                    repository.updatePlayingStateOfTrack(track.id, trackList.value!!)
+                } else{
+                    repository.updatePlayingStateOfTrack("", trackList.value!!)
+
+                }
+
+
+
             }catch (networkError: IOException) {
                 _eventNetworkError.value = true
             }
         }
     }
+
     fun onNetworkErrorShown() {
         _isNetworkErrorShown.value = true
     }
@@ -61,6 +71,10 @@ class LookupViewModel(application: Application, collection: DomainModel.Collecti
     override fun onCleared() {
         super.onCleared()
         viewModelJob.cancel()
+    }
+
+    fun onTrackPlayingComplete() {
+        onTrackPlayPressed(null)
     }
 
     class Factory(private val app: Application, private val collection:DomainModel.Collection) : ViewModelProvider.Factory {

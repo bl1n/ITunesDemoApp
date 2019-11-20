@@ -68,8 +68,8 @@ class SearchDiffCallback : DiffUtil.ItemCallback<DomainModel.Track>() {
     }
 }
 
-class OnTrackClickListener(val clickListener: (id:String)-> Unit){
+class OnTrackClickListener(val clickListener: (track: DomainModel.Track)-> Unit){
     fun onClick(track: DomainModel.Track) =
-        clickListener(track.id)
+        clickListener(track)
 }
 
