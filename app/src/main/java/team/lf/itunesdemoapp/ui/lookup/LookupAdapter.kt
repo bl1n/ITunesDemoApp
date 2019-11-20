@@ -14,7 +14,7 @@ import team.lf.itunesdemoapp.databinding.TrackListItemBinding
 import team.lf.itunesdemoapp.domain.DomainModel
 
 
-class LookupAdapter() :
+class LookupAdapter(private val clickListener: OnTrackClickListener) :
     ListAdapter<DomainModel.Track, LookupAdapter.TrackViewHolder>(SearchDiffCallback()) {
 
     private val adapterScope = CoroutineScope(Dispatchers.Default)
@@ -33,13 +33,14 @@ class LookupAdapter() :
     }
 
     override fun onBindViewHolder(holder: TrackViewHolder, position: Int) {
-        holder.bind(getItem(position))
+        holder.bind(getItem(position), clickListener)
     }
 
     class TrackViewHolder private constructor(private val binding: TrackListItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: DomainModel.Track) {
+        fun bind(item: DomainModel.Track, clickListener: OnTrackClickListener) {
             binding.track = item
+            binding.clickListener = clickListener
             binding.executePendingBindings()
         }
 
@@ -65,5 +66,10 @@ class SearchDiffCallback : DiffUtil.ItemCallback<DomainModel.Track>() {
     ): Boolean {
         return oldItem == newItem
     }
+}
+
+class OnTrackClickListener(val clickListener: (id:String)-> Unit){
+    fun onClick(track: DomainModel.Track) =
+        clickListener(track.id)
 }
 

@@ -44,6 +44,16 @@ class LookupViewModel(application: Application, collection: DomainModel.Collecti
         }
     }
 
+    fun onTrackPlayPressed(id: String){
+        viewModelScope.launch {
+            try {
+                Timber.d("onTrackPlay")
+                repository.updatePlayingStateOfTrack(id, trackList.value!!)
+            }catch (networkError: IOException) {
+                _eventNetworkError.value = true
+            }
+        }
+    }
     fun onNetworkErrorShown() {
         _isNetworkErrorShown.value = true
     }

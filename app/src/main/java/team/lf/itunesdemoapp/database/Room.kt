@@ -45,6 +45,9 @@ interface ITunesDemoDao {
     @Update
     fun updateTrack(track:LookupEntity.Track)
 
+    @Query("select * from tracks where id =:id")
+    fun getTrack(id:String):LookupEntity.Track
+
     //artists
     @Query("select * from artists where artistName = :artistName")
     fun getArtistByArtistName(artistName:String): LiveData<List<LookupEntity.Artist>>

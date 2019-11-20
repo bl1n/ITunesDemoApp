@@ -10,6 +10,8 @@ import team.lf.itunesdemoapp.network.ITunesApi
 import team.lf.itunesdemoapp.network.NetworkContainer
 import team.lf.itunesdemoapp.network.asDBModel
 import team.lf.itunesdemoapp.network.asDatabaseModel
+import timber.log.Timber
+import java.io.IOException
 
 class ITunesRepository(private val database: ITunesDemoDatabase) {
 
@@ -18,7 +20,6 @@ class ITunesRepository(private val database: ITunesDemoDatabase) {
         Transformations.map(database.iTunesDemoDao.getSearchResults()) {
             it.asDomainModel()
         }
-
 
 
     suspend fun refreshSearchList(term: String) {
@@ -62,6 +63,24 @@ class ITunesRepository(private val database: ITunesDemoDatabase) {
     }
 
 
+    suspend fun updatePlayingStateOfTrack(
+        trackId: String,
+        tracks: List<DomainModel.Track>
+    ) {
+        withContext(Dispatchers.IO) {
+            for (t in tracks) {
+                val dbT = database.iTunesDemoDao.getTrack(t.id)
+                dbT.isPlaying = false
+                database.iTunesDemoDao.updateTrack(dbT)
+            }
+            if (trackId != "") {
+                val dBTrack = database.iTunesDemoDao.getTrack(trackId)
+                dBTrack.isPlaying = true
+                database.iTunesDemoDao.updateTrack(dBTrack)
+            }
+        }
+    }
+
     suspend fun clearDatabase() {
         withContext(Dispatchers.IO) {
             database.iTunesDemoDao.clear()
@@ -69,13 +88,13 @@ class ITunesRepository(private val database: ITunesDemoDatabase) {
     }
 
     fun getTracksByCollectionId(id: String): LiveData<List<DomainModel.Track>> {
-        return Transformations.map(database.iTunesDemoDao.getTracksByCollectionsId(id)){
+        return Transformations.map(database.iTunesDemoDao.getTracksByCollectionsId(id)) {
             it.asDomainTrackModel()
         }
     }
 
-    fun getCollectionsByCollectionName(term: String): LiveData<List<DomainModel.Collection>>{
-        return Transformations.map(database.iTunesDemoDao.getCollectionsByCollectionName(term)){
+    fun getCollectionsByCollectionName(term: String): LiveData<List<DomainModel.Collection>> {
+        return Transformations.map(database.iTunesDemoDao.getCollectionsByCollectionName(term)) {
             it.asDomainCollectionModel()
         }
     }

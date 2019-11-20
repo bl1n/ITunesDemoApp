@@ -41,7 +41,9 @@ class LookupFragment : Fragment() {
         )
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
-        lookupAdapter = LookupAdapter()
+        lookupAdapter = LookupAdapter(OnTrackClickListener {
+            viewModel.onTrackPlayPressed(it)
+        })
         binding.root.findViewById<RecyclerView>(R.id.track_list).apply {
             layoutManager = LinearLayoutManager(context)
             adapter = lookupAdapter

@@ -11,7 +11,7 @@
 
         <variable
             name="clickListener"
-            type="team.lf.itunesdemoapp.ui.search.DomainModelClickListener" />
+            type="team.lf.itunesdemoapp.ui.search.OnCollectionClickListener" />
     </data>
 
 

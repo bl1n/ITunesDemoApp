@@ -9,13 +9,18 @@
         <variable
             name="track"
             type="team.lf.itunesdemoapp.domain.DomainModel.Track" />
+        <variable
+            name="clickListener"
+            type="team.lf.itunesdemoapp.ui.lookup.OnTrackClickListener" />
+        <import type="android.view.View"/>
     </data>
 
     <androidx.cardview.widget.CardView
         android:layout_margin="@dimen/card_margin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:cardCornerRadius="@dimen/card_radius">
+        app:cardCornerRadius="@dimen/card_radius"
+        android:onClick="@{()->clickListener.onClick(track)}">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -35,6 +40,7 @@
                 tools:text="Track Name" />
 
             <ImageView
+                android:visibility="@{track.playing?View.VISIBLE: View.INVISIBLE}"
                 android:id="@+id/play_pause_iv"
                 android:layout_width="30dp"
                 android:layout_height="30dp"

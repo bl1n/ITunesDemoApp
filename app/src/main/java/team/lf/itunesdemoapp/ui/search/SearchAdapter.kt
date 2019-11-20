@@ -21,7 +21,7 @@ private const val VIEW_TYPE_COLLECTION = 1
 private const val VIEW_TYPE_TRACK = 2
 private const val VIEW_TYPE_ARTIST = 3
 
-class SearchAdapter(private val clickListener: DomainModelClickListener) :
+class SearchAdapter(private val clickListener: OnCollectionClickListener) :
     ListAdapter<DomainModel, RecyclerView.ViewHolder>(SearchDiffCallback()) {
 
     private val adapterScope = CoroutineScope(Dispatchers.Default)
@@ -78,7 +78,7 @@ class SearchAdapter(private val clickListener: DomainModelClickListener) :
 
     class CollectionViewHolder private constructor(private val binding: GridCollectionItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: DomainModel.Collection, clickListener: DomainModelClickListener) {
+        fun bind(item: DomainModel.Collection, clickListener: OnCollectionClickListener) {
             binding.collection = item
             binding.clickListener = clickListener
             binding.executePendingBindings()
@@ -105,7 +105,7 @@ class SearchDiffCallback : DiffUtil.ItemCallback<DomainModel>() {
     }
 }
 
-class DomainModelClickListener(val clickListener: (collection: DomainModel.Collection) -> Unit) {
+class OnCollectionClickListener(val clickListener: (collection: DomainModel.Collection) -> Unit) {
     fun onClick(domainModel: DomainModel) =
         clickListener(domainModel as @kotlin.ParameterName(name = "collection") DomainModel.Collection)
 }

@@ -11,7 +11,6 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import team.lf.itunesdemoapp.R
 import team.lf.itunesdemoapp.databinding.FragmentSearchBinding
@@ -42,7 +41,7 @@ class SearchFragment : Fragment() {
 
         binding.viewModel = viewModel
 
-        searchAdapter = SearchAdapter(DomainModelClickListener {
+        searchAdapter = SearchAdapter(OnCollectionClickListener {
             this.findNavController().navigate(
                 SearchFragmentDirections.actionSearchFragmentToLookupFragment(it)
             )
