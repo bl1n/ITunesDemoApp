@@ -15,26 +15,26 @@ import java.sql.Timestamp
 import java.text.SimpleDateFormat
 
 @BindingAdapter("highQualityImageCover")
-fun bindHQImageCover(imgView: ImageView, imgUrl: String?) {
+fun ImageView.setHQImage(imgUrl: String?) {
     val image = imgUrl?.replace("100x100bb", "313x0w") // to get a good image resource
     image?.let {
         val imgUri = image.toUri().buildUpon().scheme("https").build()
-        Glide.with(imgView.context)
+        Glide.with(context)
             .load(imgUri)
             .apply(
                 RequestOptions()
                     .placeholder(R.drawable.loading_animation)
                     .error(R.drawable.ic_broken_image)
             )
-            .into(imgView)
+            .into(this)
     }
 }
 
 @BindingAdapter("imageUrl")
-fun bindImage(imgView: ImageView, imgUrl: String?) {
+fun ImageView.setCoverImage( imgUrl: String?) {
     imgUrl?.let {
         val imgUri = imgUrl.toUri().buildUpon().scheme("https").build()
-        Glide.with(imgView.context)
+        Glide.with(context)
             .load(imgUri)
             .transition(DrawableTransitionOptions.withCrossFade())
             .apply(
@@ -43,7 +43,7 @@ fun bindImage(imgView: ImageView, imgUrl: String?) {
                         .error(R.drawable.ic_broken_image))
             )
 
-            .into(imgView)
+            .into(this)
     }
 }
 
