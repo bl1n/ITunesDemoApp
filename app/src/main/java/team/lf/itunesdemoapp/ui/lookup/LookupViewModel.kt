@@ -18,6 +18,8 @@ class LookupViewModel(application: Application, collection: DomainModel.Collecti
     private val viewModelJob = SupervisorJob()
     private val viewModelScope = CoroutineScope(viewModelJob + Dispatchers.Main)
 
+
+    //todo networkError logic in UI
     private var _eventNetworkError = MutableLiveData<Boolean>(false)
     val eventNetworkError: LiveData<Boolean>
         get() = _eventNetworkError
