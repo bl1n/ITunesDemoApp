@@ -30,8 +30,8 @@ interface ITunesDemoDao {
     fun insertCollection(collection: LookupEntity.Collection)
 
     //tracks
-    @Query("select * from tracks where trackName = :trackName")
-    fun getTracksByTrackName(trackName:String): LiveData<List<LookupEntity.Track>>
+    @Query("select COUNT(id) from tracks where collectionId = :collectionId")
+    fun getTraksCountByCollectionId(collectionId:String): Int
 
     @Query("select * from tracks where collectionId = :collectionId")
     fun getTracksByCollectionsId(collectionId:String): LiveData<List<LookupEntity.Track>>

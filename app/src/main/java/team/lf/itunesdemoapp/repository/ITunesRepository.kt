@@ -29,6 +29,15 @@ class ITunesRepository(private val database: ITunesDemoDatabase) {
             database.iTunesDemoDao.insertAll(searchList.asDBModel())
         }
     }
+    suspend fun checkTrackCount(collectionId: String):Boolean{
+        var boolean = false
+        withContext(Dispatchers.IO){
+            val trackCount = database.iTunesDemoDao.getTraksCountByCollectionId(collectionId)
+            boolean = trackCount > 0
+            Timber.d(trackCount.toString())
+        }
+        return boolean
+    }
 
 
     suspend fun getAndSaveNetworkContainer(wrapperType: String, id: String) {

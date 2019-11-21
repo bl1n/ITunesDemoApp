@@ -14,7 +14,7 @@ import java.io.IOException
 class LookupViewModel(application: Application, collection: DomainModel.Collection): AndroidViewModel(application) {
 
     private val repository = ITunesRepository(getDatabase(application.applicationContext))
-    val trackList = repository.getTracksByCollectionId(collection.id)
+    val trackList: LiveData<List<DomainModel.Track>> = repository.getTracksByCollectionId(collection.id)
     private val viewModelJob = SupervisorJob()
     private val viewModelScope = CoroutineScope(viewModelJob + Dispatchers.Main)
 
@@ -26,14 +26,17 @@ class LookupViewModel(application: Application, collection: DomainModel.Collecti
         get() = _isNetworkErrorShown
 
     init {
-        getLookupNetworkContainer(collection.wrapperType, collection.id)
+        getLookupNetworkContainer(collection.wrapperType, collection)
     }
 
-    private fun getLookupNetworkContainer(wrapperType: String, id: String) {
+    private fun getLookupNetworkContainer(wrapperType: String, collection: DomainModel.Collection) {
+        Timber.d(trackList.value.toString())
         viewModelScope.launch {
             try {
-                Timber.d("getLookupNetworkContainer")
-                repository.getAndSaveNetworkContainer(wrapperType, id)
+                if(!repository.checkTrackCount(collection.id)){
+                    repository.getAndSaveNetworkContainer(wrapperType, collection.id)
+                    Timber.d("getLookupNetworkContainer")
+                }
                 _eventNetworkError.value = false
                 _isNetworkErrorShown.value = false
 
