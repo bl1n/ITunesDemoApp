@@ -1,18 +1,12 @@
 package team.lf.itunesdemoapp.utils
 
-import android.annotation.SuppressLint
 import android.widget.ImageView
-import android.widget.TextView
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.net.toUri
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestOptions
 import team.lf.itunesdemoapp.R
-import team.lf.itunesdemoapp.domain.DomainModel
-import java.sql.Timestamp
-import java.text.SimpleDateFormat
 
 @BindingAdapter("highQualityImageCover")
 fun ImageView.setHQImage(imgUrl: String?) {
