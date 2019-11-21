@@ -11,7 +11,6 @@ import team.lf.itunesdemoapp.network.NetworkContainer
 import team.lf.itunesdemoapp.network.asDBModel
 import team.lf.itunesdemoapp.network.asDatabaseModel
 import timber.log.Timber
-import java.io.IOException
 
 class ITunesRepository(private val database: ITunesDemoDatabase) {
 
@@ -32,7 +31,7 @@ class ITunesRepository(private val database: ITunesDemoDatabase) {
     suspend fun checkTrackCount(collectionId: String):Boolean{
         var boolean = false
         withContext(Dispatchers.IO){
-            val trackCount = database.iTunesDemoDao.getTraksCountByCollectionId(collectionId)
+            val trackCount = database.iTunesDemoDao.getTracksCountByCollectionId(collectionId)
             boolean = trackCount > 0
             Timber.d(trackCount.toString())
         }

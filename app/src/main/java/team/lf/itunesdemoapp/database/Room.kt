@@ -31,7 +31,7 @@ interface ITunesDemoDao {
 
     //tracks
     @Query("select COUNT(id) from tracks where collectionId = :collectionId")
-    fun getTraksCountByCollectionId(collectionId:String): Int
+    fun getTracksCountByCollectionId(collectionId:String): Int
 
     @Query("select * from tracks where collectionId = :collectionId")
     fun getTracksByCollectionsId(collectionId:String): LiveData<List<LookupEntity.Track>>
