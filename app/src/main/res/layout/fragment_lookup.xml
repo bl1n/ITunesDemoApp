@@ -9,9 +9,7 @@
             name="viewModel"
             type="team.lf.itunesdemoapp.ui.lookup.LookupViewModel" />
 
-        <variable
-            name="collection"
-            type="team.lf.itunesdemoapp.domain.DomainModel.Collection" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -33,7 +31,7 @@
 
         <ImageView
             android:id="@+id/collection_cover"
-            app:highQualityImageCover="@{collection.artworkUrl100}"
+            app:highQualityImageCover="@{viewModel.collection.artworkUrl100}"
             android:layout_width="150dp"
             android:layout_height="150dp"
             android:layout_marginStart="16dp"
@@ -48,7 +46,7 @@
             android:layout_height="19dp"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
-            android:text="@{collection.collectionName}"
+            android:text="@{viewModel.collection.collectionName}"
             app:layout_constraintBottom_toTopOf="@+id/collection_year"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
@@ -60,7 +58,7 @@
             android:id="@+id/collection_year"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@{collection.releaseDate}"
+            android:text="@{viewModel.collection.releaseDate}"
             app:layout_constraintBottom_toTopOf="@+id/collection_genre"
             app:layout_constraintEnd_toEndOf="@+id/collection_name"
             app:layout_constraintHorizontal_bias="0.5"
@@ -72,7 +70,7 @@
             android:id="@+id/collection_genre"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@{collection.primaryGenreName}"
+            android:text="@{viewModel.collection.primaryGenreName}"
             app:layout_constraintBottom_toTopOf="@+id/artist_name"
             app:layout_constraintEnd_toEndOf="@+id/collection_name"
             app:layout_constraintHorizontal_bias="0.5"
@@ -84,7 +82,7 @@
             android:id="@+id/artist_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@{collection.artistName}"
+            android:text="@{viewModel.collection.artistName}"
             app:layout_constraintBottom_toBottomOf="@+id/collection_cover"
             app:layout_constraintEnd_toEndOf="@+id/collection_name"
             app:layout_constraintHorizontal_bias="0.5"

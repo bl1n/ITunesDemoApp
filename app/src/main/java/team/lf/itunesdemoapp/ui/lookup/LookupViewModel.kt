@@ -11,7 +11,7 @@ import team.lf.itunesdemoapp.repository.ITunesRepository
 import timber.log.Timber
 import java.io.IOException
 
-class LookupViewModel(application: Application, collection: DomainModel.Collection): AndroidViewModel(application) {
+class LookupViewModel(application: Application, val collection: DomainModel.Collection): AndroidViewModel(application) {
 
     private val repository = ITunesRepository(getDatabase(application.applicationContext))
     val trackList: LiveData<List<DomainModel.Track>> = repository.getTracksByCollectionId(collection.id)

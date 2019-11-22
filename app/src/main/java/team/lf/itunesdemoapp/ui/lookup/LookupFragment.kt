@@ -70,10 +70,6 @@ class LookupFragment : Fragment() {
         }
 
 
-        binding.collection = LookupFragmentArgs.fromBundle(arguments!!).collection
-
-
-
         viewModel.trackList.observe(this, Observer {
             lookupAdapter.submitInCoroutine(it)
         })
