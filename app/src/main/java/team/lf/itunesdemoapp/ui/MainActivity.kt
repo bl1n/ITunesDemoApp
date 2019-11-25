@@ -1,8 +1,10 @@
 package team.lf.itunesdemoapp.ui
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import team.lf.itunesdemoapp.R
+import team.lf.itunesdemoapp.service.MusicService
 
 /*
 * TODO
@@ -17,5 +19,8 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        val musicServiceIntent = Intent(this, MusicService::class.java)
+        startService(musicServiceIntent)
     }
 }

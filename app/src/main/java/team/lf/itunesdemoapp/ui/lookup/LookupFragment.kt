@@ -1,5 +1,6 @@
 package team.lf.itunesdemoapp.ui.lookup
 
+import android.content.Intent
 import android.media.AudioManager
 import android.media.MediaPlayer
 import android.os.Bundle
@@ -14,11 +15,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import team.lf.itunesdemoapp.R
 import team.lf.itunesdemoapp.databinding.FragmentLookupBinding
+import team.lf.itunesdemoapp.service.MusicService
 
 class LookupFragment : Fragment() {
 
     private lateinit var lookupAdapter: LookupAdapter
-    private lateinit var mediaPlayer: MediaPlayer
+//    private lateinit var player: MediaPlayer
 
     private val viewModel: LookupViewModel by lazy {
         val activity = requireNotNull(this.activity) {
@@ -44,25 +46,26 @@ class LookupFragment : Fragment() {
         )
 
 
-        mediaPlayer = MediaPlayer()
+//        player = MediaPlayer()
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
         lookupAdapter = LookupAdapter(OnTrackClickListener {
             viewModel.onTrackPlayPressed(it)
-
             //todo move mediaPlayer logic to VM
-            mediaPlayer.release()
-            mediaPlayer = MediaPlayer()
-            mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC)
-            mediaPlayer.isLooping = false
-            mediaPlayer.setDataSource(it.previewUrl)
-            mediaPlayer.prepareAsync()
-            mediaPlayer.setOnPreparedListener {
-                mediaPlayer.start()
-            }
-            mediaPlayer.setOnCompletionListener {
-                viewModel.onTrackPlayingComplete()
-            }
+
+
+//            player.release()
+//            player = MediaPlayer()
+//            player.setAudioStreamType(AudioManager.STREAM_MUSIC)
+//            player.isLooping = false
+//            player.setDataSource(it.previewUrl)
+//            player.prepareAsync()
+//            player.setOnPreparedListener {
+//                player.start()
+//            }
+//            player.setOnCompletionListener {
+//                viewModel.onTrackPlayingComplete()
+//            }
         })
         binding.root.findViewById<RecyclerView>(R.id.track_list).apply {
             layoutManager = LinearLayoutManager(context)

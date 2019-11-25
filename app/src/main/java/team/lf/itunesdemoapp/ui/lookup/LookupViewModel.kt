@@ -1,6 +1,7 @@
 package team.lf.itunesdemoapp.ui.lookup
 
 import android.app.Application
+import android.content.Intent
 import android.media.AudioManager
 import android.media.MediaPlayer
 import androidx.lifecycle.*
@@ -8,6 +9,7 @@ import kotlinx.coroutines.*
 import team.lf.itunesdemoapp.database.getDatabase
 import team.lf.itunesdemoapp.domain.DomainModel
 import team.lf.itunesdemoapp.repository.ITunesRepository
+import team.lf.itunesdemoapp.service.MusicService
 import timber.log.Timber
 import java.io.IOException
 

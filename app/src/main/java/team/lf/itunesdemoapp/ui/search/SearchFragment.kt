@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
@@ -21,7 +22,7 @@ class SearchFragment : Fragment() {
         val activity = requireNotNull(this.activity) {
             "You can only access the viewModel after onActivityCreated()"
         }
-        ViewModelProviders.of(this, SearchViewModel.Factory(activity.application))
+        ViewModelProvider(this, SearchViewModel.Factory(activity.application))
             .get(SearchViewModel::class.java)
     }
 
@@ -60,7 +61,7 @@ class SearchFragment : Fragment() {
         }
 
 
-        viewModel.eventNetworkError.observe(this, Observer {
+        viewModel.eventNetworkError.observe(viewLifecycleOwner, Observer {
             if (it) onNetworkError()
         })
         binding.testSearchButton.setOnClickListener {
